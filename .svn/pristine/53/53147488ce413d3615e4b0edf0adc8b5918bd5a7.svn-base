@@ -1,0 +1,139 @@
+import processing.core.PApplet;
+import processing.core.PVector;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import com.onformative.leap.LeapMotionP5;
+
+import de.voidplus.dollar.OneDollar;
+
+import java.awt.AWTException;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.TextArea;
+import java.awt.Color;
+import java.awt.Robot;
+import java.util.ArrayList;
+import com.leapmotion.leap.Finger;
+
+public class Main extends JFrame{
+	//private PApplet pApp;
+	
+	private int width = 640;
+	private int height = 480;
+	private boolean capsOn = true;
+	
+	private TextArea output;
+	public Main()
+	{
+		setSize(width, height);
+		setBounds(0, 0, width, height);
+		// get rid of annoying layout managers
+		setLayout(null);
+		
+		// make the text boxes 
+		output = new TextArea("");  
+		// make output read only and color it back to white 
+		output.setEditable(false); 
+		output.setBackground(Color.white); 
+
+		output.setBounds(50, 380, width-100, height - 420);
+		// add text boxes to their containers 
+
+		add(output);
+		
+		HWRCanvas hwrc = new HWRCanvas(this);
+		hwrc.init();
+		hwrc.setBounds(170, 50, 300, 300);
+		add(hwrc);
+		
+		
+		  
+		
+
+		//pack();
+		setResizable(false);
+		setVisible(true);
+		setTitle("LEAP Handwriting Recognition");
+	}
+	
+	public void detectedA(String gesture, int x, int y, int c_x, int c_y) {
+		System.out.println("This is A...");
+		  if(capsOn)
+			output.append("A");
+		  else
+			  output.append("a");
+		}
+
+	public void detectedG(String gesture, int x, int y, int c_x, int c_y) {
+		  System.out.println("This is G...");
+
+		  output.append("G");
+		  System.out.println("output text: " + output.getText());
+		}
+	
+	public void detectedL(String gesture, int x, int y, int c_x, int c_y) {
+		  System.out.println("This is L...");
+
+		  if(capsOn)
+			  output.append("L");
+		  else
+			  output.append("l");
+		  System.out.println("output text: " + output.getText());
+		}
+	
+	public void detectedV(String gesture, int x, int y, int c_x, int c_y) {
+		  System.out.println("This is V...");
+
+		  if(capsOn)
+			  output.append("V");
+		  else
+			  output.append("v");
+		  System.out.println("output text: " + output.getText());
+		}
+	
+	public void detectedF(String gesture, int x, int y, int c_x, int c_y) {
+		  System.out.println("This is F...");
+
+		  if(capsOn)
+			  output.append("F");
+		  else
+			  output.append("f");
+		  System.out.println("output text: " + output.getText());
+		}
+	
+	public void detectedT(String gesture, int x, int y, int c_x, int c_y) {
+		  System.out.println("This is T...");
+
+		  if(capsOn)
+			  output.append("T");
+		  else
+			  output.append("t");
+		  System.out.println("output text: " + output.getText());
+		}
+
+	public void detectedCaps(String gesture, int x, int y, int c_x, int c_y) {
+		  System.out.println("This is CAPS...");
+
+		  toggleCaps();
+		  
+		  System.out.println("output text: " + output.getText());
+		}
+	
+	private void toggleCaps()
+	{
+		if(capsOn)
+			capsOn = false;
+		else
+			capsOn = true;
+	}
+	
+	public static void main(String[] args) {
+		new Main();
+
+	}
+}

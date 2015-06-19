@@ -1,0 +1,246 @@
+import processing.core.PApplet;
+import processing.core.PVector;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import com.onformative.leap.LeapMotionP5;
+
+import de.voidplus.dollar.OneDollar;
+
+import java.awt.AWTException;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.TextArea;
+import java.awt.Color;
+import java.awt.Robot;
+import java.util.ArrayList;
+import com.leapmotion.leap.Finger;
+
+public class Main extends JFrame{
+	//private PApplet pApp;
+	
+	private int width = 640;
+	private int height = 480;
+
+	
+	
+	public Main()
+	{
+		setSize(width, height);
+		setBounds(0, 0, width, height);
+		setLayout(null);
+		//pApp = p;
+		
+		// make the text boxes 
+		TextArea output = new TextArea("");  
+		// make output read only and color it back to white 
+		//output.setEditable(false); 
+		output.setBackground(Color.white); 
+
+		output.setBounds(50, 380, width-100, height - 420);
+		// add text boxes to their containers 
+
+		add(output);
+		
+//		DrawingArea da = new DrawingArea(output);
+//		da.init();
+//		da.setBounds(170, 50, 300, 300);
+//		add(da);
+		
+		HWRCanvas hwrc = new HWRCanvas(output, this);
+		//HWRCanvas hwrc = new HWRCanvas(output);
+		hwrc.init();
+		hwrc.setBounds(170, 50, 300, 300);
+		add(hwrc);
+		
+		
+		  
+		
+
+		//pack();
+		setResizable(false);
+		setVisible(true);
+		setTitle("LEAP Handwriting Recognition");
+	}
+	
+	
+	void detected(String gesture, int x, int y, int c_x, int c_y) {
+		System.out.println("test circle...");
+//		  println("Detected gesture: " + gesture + " (Position: X: " + x + " / Y: " + y 
+//		  + ", Centroid X: " + c_x + " / Y: " + c_y + ")");
+		}
+//	class DrawingArea extends PApplet
+//	{
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;
+//
+//		private OneDollar one;
+//		
+//		// for obtaining the points
+//		boolean move = false;
+//		boolean over = false;
+//		ArrayList<Integer> templateX;
+//		ArrayList<Integer> templateY;
+//
+//		// generate key events
+//		Robot robot;
+//		
+//		// the leap
+//		private LeapMotionP5 leap;
+//		
+//		// the output
+//		private TextArea output;
+//		
+//		public DrawingArea()
+//		{
+//			
+//		}
+//		
+//		public DrawingArea(final TextArea output)
+//		{
+//			this.output = output;
+//		}
+//		
+//		@Override
+//		public void setup()
+//		{
+//			  size(300,300);
+//			  background(250);
+//
+//			  // initialize the Leap
+//			  leap = new LeapMotionP5(this);
+//			  
+//			  try {
+//				robot = new Robot();
+//			} catch (AWTException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			  
+//			  one = new OneDollar(this);
+//			 
+//			  
+//			  
+//			  //one.add("circle", new Integer[] {127, 141, 124, 140, 120, 139, 118, 139 /* x1, y1, x2, y2 ..*/});
+//			  one.add("A", new Integer[] {68, 220, 68, 220, 68, 220, 68, 220, 72, 217, 97, 172, 97, 172, 110, 150, 
+//			    131, 119, 145, 100, 158, 85, 172, 70, 177, 64, 180, 61, 182, 59, 182, 59, 184, 58, 184, 58, 185, 
+//			    57, 185, 57, 185, 56, 185, 56, 185, 56, 185, 56, 186, 58, 187, 73, 187, 85, 187, 99, 188, 116, 
+//			    191, 141, 191, 174, 191, 174, 192, 186, 192, 186, 197, 205, 199, 212, 199, 215, 200, 217, 200, 
+//			    217, 200, 217, 200, 217, 200, 217, 200, 217, 200, 217, 200, 217, 200, 217, 200, 217, 200, 217, 
+//			    200, 217, 200, 217, 200, 216, 201, 205, 201, 197, 201, 188, 200, 165, 200, 165, 197, 159, 194, 
+//			    151, 193, 149, 192, 148, 191, 147, 191, 147, 191, 147, 191, 147, 191, 147, 191, 147, 191, 147, 
+//			    191, 147, 191, 147, 191, 147, 191, 147, 186, 147, 186, 147, 172, 147, 164, 147, 153, 147, 153, 147, 
+//			    126, 147, 126, 147, 106, 147, 106, 147, 102, 147, 102, 147, 102, 147, 102, 147, 102, 147, 102, 147, 
+//			    102, 147, 102, 147, 101, 147, 101, 147});
+//			    
+//			    
+//			    
+//			  one.add("G", new Integer[] {214, 91, 214, 91, 214, 91, 214, 91, 214, 90, 214, 75, 214, 75, 209, 
+//			    66, 200, 56, 192, 48, 184, 42, 175, 38, 175, 38, 154, 36, 154, 36, 135, 36, 124, 42, 113, 50, 
+//			    104, 58, 95, 65, 88, 72, 83, 79, 79, 87, 76, 111, 76, 111, 75, 127, 78, 163, 84, 179, 84, 179, 
+//			    96, 200, 106, 210, 120, 221, 151, 233, 164, 238, 164, 238, 203, 241, 219, 240, 228, 236, 237, 
+//			    230, 244, 220, 249, 204, 249, 193, 249, 184, 249, 177, 249, 173, 249, 168, 249, 166, 249, 164, 
+//			    247, 162, 246, 162, 244, 162, 240, 162, 240, 162, 233, 162, 218, 163, 206, 163, 195, 163, 183, 
+//			    163, 170, 163, 156, 163, 148, 163, 145, 163, 145, 163, 144, 163, 144, 163, 144, 163, 144, 163, 
+//			    144, 163, 144, 163, 144, 163, 144, 163});  
+//			  //one.bind("circle", "detected"); // global
+//			  //one.bind("circle", foo, "bar"); // local
+//			  
+//			  one.bind("A", "detectedA");
+//			  one.bind("G", "detectedG");
+//			  
+//			  one.setMinLength(50);
+//			  one.setMaxLength(2500);
+//			  one.setMaxTime(5000);
+//
+//			  one.setMinScore(65); // 85%
+//			  one.setRotationAngle(3);
+//			  one.setFragmentationRate(64);
+//
+//			  println(one);
+//			  one.setVerbose(true);  
+//			  
+//			  templateX = new ArrayList<Integer>();
+//			  templateY = new ArrayList<Integer>();
+//		}
+//		
+//		@Override
+//		public void draw()
+//		{
+//			clear();
+//			background(125);
+//			one.check();
+//			  
+//			noFill();
+//			one.draw();
+//			if (move)
+//			{
+//			    //println ("Mouse X: " + mouseX +", Mouse Y: " + mouseY);
+//			    templateX.add(mouseX);
+//			    templateY.add(mouseY);
+//			}
+//			
+//			// anyway to detect only one finger?
+//			for (Finger finger : leap.getFingerList()) {
+//			    PVector fingerPos = leap.getTip(finger);
+//			    ellipse(fingerPos.x, fingerPos.y, 10, 10);
+//			  }
+//		}
+//		
+//
+//		protected void detectedA(String gesture, int x, int y, int c_x, int c_y) {
+//			  //println("Detected gesture A: " + gesture + " (Position: X: " + x + " / Y: " + y 
+//			  //+ ", Centroid X: " + c_x + " / Y: " + c_y + ")");
+//			  this.output.append("A");
+//			}
+//
+//		private	void detectedG(String gesture, int x, int y, int c_x, int c_y) {
+//			  System.out.println("This is G...");
+//			  //println("Detected gesture G: " + gesture + " (Position: X: " + x + " / Y: " + y 
+//			  //+ ", Centroid X: " + c_x + " / Y: " + c_y + ")");
+//			  this.output.append("G");
+//			  System.out.println("output text: " + output.getText());
+//			}
+//		
+//		@Override
+//		public void mousePressed()  
+//		{ 
+//		  one.start(100);
+//		 
+//		  if(!over)
+//		     move = true; 
+//		} // 100 = ID
+//		
+//		@Override
+//		public void mouseDragged()  { one.update(100, mouseX, mouseY); }
+//		
+//		@Override
+//		public void mouseReleased() { one.end(100); 
+//		System.out.println("Mouse released...");
+//		System.out.println("The points are...");
+//		for(int i = 0; i < templateX.size(); i++)
+//		{
+//		  //System.out.print(templateX.get(i) + ", " + templateY.get(i) + ", ");
+//		}
+//
+//
+//		move = false;
+//		if(over == false)
+//		  over = true;
+//		else
+//		  over = true;
+//		}
+//	}
+	
+	public static void main(String[] args) {
+		new Main();
+		//PApplet.main(new String[] {"--present", "Main"});
+		//runSketch({"--present"}, new Main());
+	}
+}
